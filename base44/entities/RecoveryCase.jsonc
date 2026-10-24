@@ -1,0 +1,101 @@
+{
+  "name": "RecoveryCase",
+  "type": "object",
+  "properties": {
+    "case_code": {
+      "type": "string"
+    },
+    "match_id": {
+      "type": "string"
+    },
+    "lost_report_id": {
+      "type": "string"
+    },
+    "found_report_id": {
+      "type": "string"
+    },
+    "owner_id": {
+      "type": "string"
+    },
+    "finder_id": {
+      "type": "string"
+    },
+    "owner_name": {
+      "type": "string"
+    },
+    "finder_name": {
+      "type": "string"
+    },
+    "item_name": {
+      "type": "string"
+    },
+    "match_score": {
+      "type": "number"
+    },
+    "claim_status": {
+      "type": "string",
+      "default": "CLAIM_PENDING"
+    },
+    "case_status": {
+      "type": "string",
+      "default": "CLAIM_PENDING"
+    },
+    "admin_decision": {
+      "type": "string"
+    },
+    "rejection_reason": {
+      "type": "string"
+    },
+    "claimed_at": {
+      "type": "string"
+    },
+    "approved_at": {
+      "type": "string"
+    },
+    "rejected_at": {
+      "type": "string"
+    },
+    "returned_at": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "match_id",
+    "lost_report_id",
+    "found_report_id",
+    "owner_id",
+    "finder_id"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "data.owner_id": "{{user.id}}"
+        },
+        {
+          "data.finder_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

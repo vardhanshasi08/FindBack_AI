@@ -1,0 +1,107 @@
+{
+  "name": "LostReport",
+  "type": "object",
+  "properties": {
+    "report_code": {
+      "type": "string"
+    },
+    "owner_id": {
+      "type": "string"
+    },
+    "owner_name": {
+      "type": "string"
+    },
+    "owner_email": {
+      "type": "string"
+    },
+    "item_name": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "image_file_uri": {
+      "type": "string"
+    },
+    "color": {
+      "type": "string"
+    },
+    "visible_characteristics": {
+      "type": "string"
+    },
+    "lost_location": {
+      "type": "string"
+    },
+    "lost_datetime": {
+      "type": "string"
+    },
+    "additional_notes": {
+      "type": "string"
+    },
+    "has_secret_detail": {
+      "type": "boolean",
+      "default": false
+    },
+    "status": {
+      "type": "string",
+      "default": "LOST_REPORTED"
+    },
+    "match_status": {
+      "type": "string",
+      "default": "not_run"
+    },
+    "match_error": {
+      "type": "string"
+    },
+    "matched_at": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "item_name",
+    "category",
+    "description",
+    "lost_location",
+    "lost_datetime",
+    "owner_id"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "data.owner_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "data.owner_id": "{{user.id}}"
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "$and": [
+        {
+          "data.owner_id": "{{user.id}}"
+        },
+        {
+          "data.status": {
+            "$in": [
+              "LOST_REPORTED"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

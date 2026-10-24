@@ -1,0 +1,75 @@
+{
+  "name": "HandoverOtp",
+  "type": "object",
+  "properties": {
+    "case_id": {
+      "type": "string"
+    },
+    "owner_id": {
+      "type": "string"
+    },
+    "finder_id": {
+      "type": "string"
+    },
+    "otp_hash": {
+      "type": "string"
+    },
+    "otp_salt": {
+      "type": "string"
+    },
+    "otp_expires_at": {
+      "type": "string"
+    },
+    "issued_at": {
+      "type": "string"
+    },
+    "issue_count": {
+      "type": "number",
+      "default": 1
+    },
+    "failed_attempts": {
+      "type": "number",
+      "default": 0
+    },
+    "last_attempt_at": {
+      "type": "string"
+    },
+    "consumed": {
+      "type": "boolean",
+      "default": false
+    },
+    "consumed_at": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "case_id",
+    "owner_id",
+    "finder_id",
+    "otp_hash",
+    "otp_salt",
+    "otp_expires_at"
+  ],
+  "rls": {
+    "read": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}

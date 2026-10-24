@@ -1,0 +1,112 @@
+{
+  "name": "FoundReport",
+  "type": "object",
+  "properties": {
+    "report_code": {
+      "type": "string"
+    },
+    "finder_id": {
+      "type": "string"
+    },
+    "finder_name": {
+      "type": "string"
+    },
+    "finder_email": {
+      "type": "string"
+    },
+    "item_name": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "image_file_uri": {
+      "type": "string"
+    },
+    "color": {
+      "type": "string"
+    },
+    "visible_characteristics": {
+      "type": "string"
+    },
+    "found_location": {
+      "type": "string"
+    },
+    "found_datetime": {
+      "type": "string"
+    },
+    "additional_observations": {
+      "type": "string"
+    },
+    "linked_owner_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "status": {
+      "type": "string",
+      "default": "FOUND_REPORTED"
+    },
+    "match_status": {
+      "type": "string",
+      "default": "not_run"
+    },
+    "match_error": {
+      "type": "string"
+    },
+    "matched_at": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "item_name",
+    "category",
+    "description",
+    "found_location",
+    "found_datetime",
+    "finder_id"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "data.finder_id": "{{user.id}}"
+        },
+        {
+          "data.linked_owner_ids": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "data.finder_id": "{{user.id}}"
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "$and": [
+        {
+          "data.finder_id": "{{user.id}}"
+        },
+        {
+          "data.status": {
+            "$in": [
+              "FOUND_REPORTED"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

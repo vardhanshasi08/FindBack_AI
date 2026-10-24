@@ -1,0 +1,75 @@
+{
+  "name": "Handover",
+  "type": "object",
+  "properties": {
+    "case_id": {
+      "type": "string"
+    },
+    "owner_id": {
+      "type": "string"
+    },
+    "finder_id": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "handover_date": {
+      "type": "string"
+    },
+    "handover_time": {
+      "type": "string"
+    },
+    "instructions": {
+      "type": "string"
+    },
+    "schedule_status": {
+      "type": "string",
+      "default": "SCHEDULED"
+    },
+    "revision": {
+      "type": "number",
+      "default": 1
+    }
+  },
+  "required": [
+    "case_id",
+    "owner_id",
+    "finder_id",
+    "location",
+    "handover_date",
+    "handover_time"
+  ],
+  "rls": {
+    "read": {
+      "$or": [
+        {
+          "data.owner_id": "{{user.id}}"
+        },
+        {
+          "data.finder_id": "{{user.id}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "create": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "update": {
+      "user_condition": {
+        "role": "admin"
+      }
+    },
+    "delete": {
+      "user_condition": {
+        "role": "admin"
+      }
+    }
+  }
+}
